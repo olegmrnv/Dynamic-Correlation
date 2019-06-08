@@ -1,4 +1,4 @@
-function makeResponsive() {
+
 
 
     var divArea = d3.select(".article");
@@ -22,8 +22,8 @@ function makeResponsive() {
         left: 50
     };
 
-    var svgWidth = window.innerWidth /1.5;
-    var svgHeight = window.innerHeight - 140;
+    var svgWidth = 1000;
+    var svgHeight = 700;
 
     var plot_height = svgHeight - margin.top - margin.bottom;
     var plot_width = svgWidth - margin.left - margin.right;
@@ -45,10 +45,10 @@ function makeResponsive() {
         });
 
         var xScale = d3.scaleLinear()
-            .domain([d3.min(stateData, d => d.smokes)-1, d3.max(stateData, d => d.smokes)+1])
+            .domain([d3.min(stateData, d => d.smokes) - 1, d3.max(stateData, d => d.smokes) + 1])
             .range([0, plot_width]);
         var yScale = d3.scaleLinear()
-            .domain([d3.min(stateData, d => d.poverty)-1, d3.max(stateData, d => d.poverty)+1])
+            .domain([d3.min(stateData, d => d.poverty) - 1, d3.max(stateData, d => d.poverty) + 1])
             .range([plot_height, 0]);
 
         var xAxis = d3.axisBottom(xScale).ticks(20);
@@ -61,28 +61,20 @@ function makeResponsive() {
             .data(stateData)
             .enter()
             .append("circle")
+            .classed("stateCircle", true)
             .attr("cx", d => xScale(d.smokes))
             .attr("cy", d => yScale(d.poverty))
-            .attr("r", "10")
-            .attr("fill", "AliceBlue")
-            .attr("stroke-width", "1")
-            .attr("stroke", "black")
+            .attr("r", "15")
             .append("text")
-            .attr("text", d=>d.abbr);
+            .attr("text", d => d.abbr);
+
+        svg.append("text")            
+            .attr("transform", `translate(${plot_width / 2}, ${plot_height + margin.top + 20})`)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "26px")
+            .attr("fill", "black")
+            .text("Smokes");
 
 
     })
 
-
-
-
-
-
-
-}
-makeResponsive();
-
-
-
-
-d3.select(window).on("resize", makeResponsive);
