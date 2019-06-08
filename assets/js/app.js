@@ -23,7 +23,7 @@ var margin = {
 };
 
 var svgWidth = 1000;
-var svgHeight = 700;
+var svgHeight = 600;
 
 var plot_height = svgHeight - margin.top - margin.bottom;
 var plot_width = svgWidth - margin.left - margin.right;
@@ -45,10 +45,10 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
     });
 
     var xScale = d3.scaleLinear()
-        .domain([d3.min(stateData, d => d.smokes) - 1, d3.max(stateData, d => d.smokes) + 1])
+        .domain([d3.min(stateData, d => d.smokes) - 2, d3.max(stateData, d => d.smokes) + 2])
         .range([0, plot_width]);
     var yScale = d3.scaleLinear()
-        .domain([d3.min(stateData, d => d.poverty) - 1, d3.max(stateData, d => d.poverty) + 1])
+        .domain([d3.min(stateData, d => d.poverty) - 2, d3.max(stateData, d => d.poverty) + 2])
         .range([plot_height, 0]);
 
     var xAxis = d3.axisBottom(xScale).ticks(20);
@@ -63,46 +63,38 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
         .append("circle")
         .classed("stateCircle", true)
         .attr("cx", d => xScale(d.smokes))
+        .attr("cy", -100)
+        .transition()
+        .duration(1500)
         .attr("cy", d => yScale(d.poverty))
         .attr("r", "15");
 
-    // svg
-    //     .data(stateData)
-    //     .enter()
-    //     .append("text")
-    //     .attr("cx", d => xScale(d.smokes))
-    //     .attr("cy", d => yScale(d.poverty))
-    //     .attr("html", d => d.abbr);
-
-    // var textGroup = chartGroup.selectAll()
-    //     .data(stateData)
-    //     .enter()
-    //     .append("text")
-    //     .attr("transform", `translate(${xScale(d.smokes)}, ${yScale(d.poverty)})`)
-    // .attr("cx", d => xScale(d.smokes))
-    // .attr("cy", d => yScale(d.poverty))
-    // .attr("html", d => d.abbr);
-
     var tickGroup = chartGroup.selectAll()
         .data(stateData)
-        .enter()        
+        .enter()
         .append("text")
-        // .attr("transform", `translate(${plot_width / 2}, ${plot_height + margin.top + 10})`)
-        // .attr("text-anchor", "middle")
-        // .attr("font-size", "26px")
-        // .attr("fill", "black")
-        .attr("x", d => (xScale(d.smokes))-10)
-        .attr("y", d => (yScale(d.poverty))+6)
+        .attr("x", d => (xScale(d.smokes)) - 10)
+        .attr("y", -100)
         .attr("font-size", "14px")
-        .text(d => d.abbr);
+        .text(d => d.abbr)
+        .transition()
+        .duration(1500)
+        .attr("y", d => (yScale(d.poverty)) + 6);
 
     svg.append("text")
-        .attr("transform", `translate(${plot_width / 2}, ${plot_height + margin.top + 40})`)
+        .attr("transform", `translate(${svgWidth / 2}, ${svgHeight})`)
         .attr("text-anchor", "middle")
         .attr("font-size", "26px")
         .attr("fill", "black")
-        .text("Smokes");
+        .text("Smokes (%)");
 
-
+    svg.append("text")        
+        .attr("transform",  "rotate(-90)")
+        .attr("text-anchor", "middle")
+        .attr("font-size", "26px")
+        .attr("fill", "black")
+        .attr("y", 20)
+        .attr("x", - (svgHeight / 2) )
+        .text("Poverty (%)");
 })
 
