@@ -86,7 +86,7 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
         .attr("text-anchor", "middle")
         .attr("font-size", "26px")
         .attr("fill", "black")
-        .text("Smokes (%)");
+        .text("Smokers (%)");
 
     svg.append("text")        
         .attr("transform",  "rotate(-90)")
@@ -95,6 +95,6 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
         .attr("fill", "black")
         .attr("y", 20)
         .attr("x", - (svgHeight / 2) )
-        .text("Poverty (%)");
+        .text("In Poverty (%)");
 })
 
