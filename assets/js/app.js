@@ -22,7 +22,7 @@ function makeResponsive() {
         left: 50
     };
 
-    var svgWidth = window.innerWidth - 300;
+    var svgWidth = window.innerWidth /1.5;
     var svgHeight = window.innerHeight - 140;
 
     var plot_height = svgHeight - margin.top - margin.bottom;
