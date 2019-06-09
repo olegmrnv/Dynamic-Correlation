@@ -1,10 +1,3 @@
-
-var divArea = d3.select(".article");
-
-if (!divArea.empty()) {
-    divArea.remove();
-}
-
 var svgArea = d3.select("#scatter").select("svg");
 
 if (!svgArea.empty()) {
@@ -163,6 +156,7 @@ function updateToolTip(chosenXAxis, chosenYaxis, circlesGroup) {
 
     var toolTip = d3.tip()
         .attr("class", "d3-tip")
+        .attr("pointer-events", "none")
         .offset([80, -60])
         .html(function (d) {
             return (`${d.state}<br>${labelx} ${d[chosenXAxis]}<br>${labely} ${d[chosenYAxis]}`);
@@ -171,11 +165,15 @@ function updateToolTip(chosenXAxis, chosenYaxis, circlesGroup) {
         circlesGroup.call(toolTip);
 
         circlesGroup.on("mouseover", function (data) {
-        toolTip.show(data);
+        toolTip.show(data, this);
+        d3.select(this).attr("stroke","black");
+        // console.log(d3.select(this));
     })
         // onmouseout event
         .on("mouseout", function (data, index) {
-            toolTip.hide(data);
+            toolTip.hide(data, this);
+            d3.select(this).attr("stroke","#e3e3e3");
+            
         });
 
     return circlesGroup;
