@@ -34,6 +34,10 @@
   fill: #89bdd3;
   stroke: #e3e3e3;
 }
+.stateCircleON {
+  fill: #89bdd3;
+  stroke: #4d4d4d;
+}
 
 .chart {
   display: block;

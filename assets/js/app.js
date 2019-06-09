@@ -157,23 +157,23 @@ function updateToolTip(chosenXAxis, chosenYaxis, circlesGroup) {
     var toolTip = d3.tip()
         .attr("class", "d3-tip")
         .attr("pointer-events", "none")
-        .offset([80, -60])
+        .offset([100, -60])
         .html(function (d) {
             return (`${d.state}<br>${labelx} ${d[chosenXAxis]}<br>${labely} ${d[chosenYAxis]}`);
         });
 
-        circlesGroup.call(toolTip);
+    circlesGroup.call(toolTip);
 
-        circlesGroup.on("mouseover", function (data) {
+    circlesGroup.on("mouseover", function (data) {
         toolTip.show(data, this);
-        d3.select(this).attr("stroke","black");
+        d3.select(this).attr("class", "stateCircleON");
         // console.log(d3.select(this));
     })
         // onmouseout event
         .on("mouseout", function (data, index) {
             toolTip.hide(data, this);
-            d3.select(this).attr("stroke","#e3e3e3");
-            
+            d3.select(this).attr("class", "stateCircle");
+
         });
 
     return circlesGroup;
@@ -223,7 +223,8 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
         .classed("stateCircle", true)
         .attr("cx", d => xLinearScale(d[chosenXAxis]))
         .attr("cy", d => yLinearScale(d[chosenYAxis]))
-        .attr("r", "15");
+        .attr("r", "15")
+        .attr("fill", "black");
 
     var AbbrGroup = chartGroup.selectAll()
         .data(stateData)
@@ -295,7 +296,8 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
         .text("Household Income (Median)");
 
 
-        circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+    circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+    
 
 
     xlabelsGroup.selectAll("text")
