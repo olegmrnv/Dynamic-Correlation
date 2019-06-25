@@ -234,7 +234,7 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
         .attr("r", "15")
 
     // creating abbriviation group and positioning it on top of each circle
-    var AbbrGroup = chartGroup.selectAll()
+    var AbbrGroup = chartGroup.selectAll(".stateText")
         .data(stateData)
         .enter()
         .append("text")
@@ -242,7 +242,7 @@ d3.csv("assets/data/data.csv").then(function (stateData) {
         .attr("x", d => xLinearScale(d[chosenXAxis]))
         .attr("y", d => yLinearScale(d[chosenYAxis]) + 5) //adjusting height so it would be in the middle of circle
         .attr("font-size", "14px")
-        .attr("pointer-events", "none") //when mouse is over the text element toolTip will stay active like as mouse is over the circle
+        .attr("pointer-events", "none") //when mouse is over the text element toolTip will stay active like as mouse is over the c ircle
         .text(d => d.abbr);
 
 
